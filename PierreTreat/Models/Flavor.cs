@@ -7,7 +7,7 @@ namespace PierreTreat.Models
   {
     public int FlavorId { get; set; }
     [Required(ErrorMessage = "Flavor type can't be empty.")]
-    public string Favor { get; set; }
+    public string FavorName { get; set; }
     public List<TreatFlavor> JoinEntities { get; set; }
   }
 }
