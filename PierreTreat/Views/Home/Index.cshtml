@@ -26,7 +26,7 @@
   <p>No flavors have been added yet.</p>
 }
 <ul>
-  @foreach (Flavor flavor in Model["flavor"])
+  @foreach (Flavor flavor in Model["flavors"])
   {
     <li>@Html.ActionLink(@flavor.FavorName, "Detail", "Flavors", new { id = @flavor.FlavorId })</li>
   }
