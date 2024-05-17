@@ -27,5 +27,34 @@ namespace PierreTreat.Controllers
     {
       return View(_db.Treats.ToList());
     }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(Treat treat)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        if (!ModelState.IsValid)
+        {
+          return View(treat);
+        }
+        else
+        {
+          _db.Treats.Add(treat);
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+        }
+      }
+      else
+      {
+        return View();
+      }
+    }
   }
 }
