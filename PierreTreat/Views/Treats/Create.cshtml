@@ -1,0 +1,29 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierreTreat.Models.Treat;
+
+<h4>Add a new treat</h4>
+
+@if (!ViewData.ModelState.IsValid)
+{
+  @Html.ValidationSummary("Please fix the following error(s) and then resubmit form:")
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+  @using (Html.BeginForm())
+  {
+    @Html.LabelFor(model => model.TreatType)
+    @Html.TextBoxFor(model => model.TreatType)
+
+    <input type="submit" value="Add new treat" class="btn btn-default" />
+  }
+}
+else
+{
+  <p>Please @Html.ActionLink("log in", "LogIn", "Account") to create a new treat.</p>
+}
+
+<p>@Html.ActionLink("Show all treats", "Index")</p>
