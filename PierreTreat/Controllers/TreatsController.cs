@@ -92,7 +92,38 @@ namespace PierreTreat.Controllers
       }
       else
       {
-        return View(Treat treat, int flavorId);
+        ViewBag.TreatId = new SelectList(_db.Flavors, "FlavorId", "FlavorName");
+        return View(treat);
+      }
+    }
+
+    public ActionResult Edit(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Edit(Treat treat)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        if (!ModelState.IsValid)
+        {
+          return View(treat);
+        }
+        else
+        {
+          _db.Treats.Update(treat);
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+        }
+      }
+      else
+      {
+        return View(treat);
       }
     }
   }
