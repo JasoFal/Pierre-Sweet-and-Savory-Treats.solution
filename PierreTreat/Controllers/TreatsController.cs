@@ -150,5 +150,23 @@ namespace PierreTreat.Controllers
         return View(id);
       }
     }
+
+    [HttpPost]
+    public async Task<ActionResult> DeleteJoin(int joinId)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(entry => entry.TreatFlavorId == joinId);
+        _db.TreatFlavors.Remove(joinEntry);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        return View();
+      }
+    }
   }
 }
