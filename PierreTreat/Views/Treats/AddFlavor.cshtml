@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierreTreat.Models.Treat
+
+<h2>Add a flavor</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+  <h4>Add a flavor to this treat: @Html.DisplayFor(model => model.TreatType)</h4>
+  
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.TreatId)
+
+    @Html.Label("Select tag")
+    @Html.DropDownList("FlavorId")
+
+    <input type="submit" value="Save" />
+  }
+}
+else
+{
+  <p>Please @Html.ActionLink("log in", "LogIn", "Account") to add a flavor to this treat: @Html.DisplayFor(model => model.TreatType)</p>
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>
