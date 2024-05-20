@@ -126,5 +126,29 @@ namespace PierreTreat.Controllers
         return View(treat);
       }
     }
+
+    public ActionResult Delete(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<ActionResult> DeleteConfirmed(int id)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+        _db.Treats.Remove(thisTreat);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        return View(id);
+      }
+    }
   }
 }
