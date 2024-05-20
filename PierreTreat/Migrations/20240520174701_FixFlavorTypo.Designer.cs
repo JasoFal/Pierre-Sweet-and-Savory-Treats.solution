@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PierreTreat.Models;
 
@@ -10,9 +11,10 @@ using PierreTreat.Models;
 namespace PierreTreat.Migrations
 {
     [DbContext(typeof(PierreTreatContext))]
-    partial class PierreTreatContextModelSnapshot : ModelSnapshot
+    [Migration("20240520174701_FixFlavorTypo")]
+    partial class FixFlavorTypo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
