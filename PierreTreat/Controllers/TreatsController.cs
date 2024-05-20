@@ -65,5 +65,35 @@ namespace PierreTreat.Controllers
         .FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
+
+    public ActionResult AddFlavor(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      ViewBag.TreatId = new SelectList(_db.Flavors, "FlavorId", "FlavorName");
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> AddFlavor(Treat treat, int flavorId)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        #nullable enable
+        TreatFlavor? joinEntity = _db.TreatFlavors.FirstOrDefault(join => (join.FlavorId == flavorId && join.TreatId == treat.TreatId));
+        #nullable disable
+        if (joinEntity == null && flavorId != 0)
+        {
+          _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavorId, TreatId = treat.TreatId });
+          _db.SaveChanges();
+        }
+        return RedirectToAction("Details", new { id = treat.TreatId });
+      }
+      else
+      {
+        return View(Treat treat, int flavorId);
+      }
+    }
   }
 }
