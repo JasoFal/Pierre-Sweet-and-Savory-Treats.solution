@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+
 namespace PierreTreat.Controllers
 {
   public class FlavorsController : Controller
@@ -147,6 +148,24 @@ namespace PierreTreat.Controllers
       else
       {
         return View(id);
+      }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> DeleteJoin(int joinId)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(entry => entry.TreatFlavorId == joinId);
+        _db.TreatFlavors.Remove(joinEntry);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        return View(joinId);
       }
     }
   }
