@@ -125,5 +125,29 @@ namespace PierreTreat.Controllers
         return View(flavor);
       }
     }
+
+    public ActionResult Delete(int id)
+    {
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flav => flav.FlavorId == id);
+      return View(thisFlavor);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<ActionResult> DeleteConfirmed(int id)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        Flavor thisFlavor = _db.Flavors.FirstOrDefault(flav => flav.FlavorId == id);
+        _db.Flavors.Remove(thisFlavor);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        return View(id);
+      }
+    }
   }
 }
