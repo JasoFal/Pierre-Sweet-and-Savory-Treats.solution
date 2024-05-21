@@ -1,0 +1,29 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierreTreat.Models.Flavor;
+
+<h4>Add a new flavor</h4>
+
+@if (!ViewData.ModelState.IsValid)
+{
+  @Html.ValidationSummary("Please fix the following error(s) and then resubmit form:")
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+  @using (Html.BeginForm())
+  {
+    @Html.LabelFor(model => model.FlavorName)
+    @Html.TextBoxFor(model => model.FlavorName)
+
+    <input type="submit" value="Add new flavor" class="btn btn-default" />
+  }
+}
+else
+{
+  <p>Please @Html.ActionLink("log in", "LogIn", "Account") to create a new flavor.</p>
+}
+
+<p>@Html.ActionLink("Show all flavors", "Index")</p>
