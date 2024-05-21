@@ -92,7 +92,7 @@ namespace PierreTreat.Controllers
       }
       else
       {
-        ViewBag.TreatId = new SelectList(_db.Flavors, "FlavorId", "FlavorName");
+        ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "FlavorName");
         return View(treat);
       }
     }
