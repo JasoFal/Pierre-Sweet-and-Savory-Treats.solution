@@ -53,7 +53,7 @@ namespace PierreTreat.Controllers
       }
       else
       {
-        return View();
+        return View(treat);
       }
     }
 
