@@ -95,5 +95,35 @@ namespace PierreTreat.Controllers
         return View(flavor);
       }
     }
+
+    public ActionResult Edit(int id)
+    {
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flav => flav.FlavorId == id);
+      return View(thisFlavor);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Edit(Flavor flavor)
+    {
+      string userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser != null)
+      {
+        if (!ModelState.IsValid)
+        {
+          return View(flavor);
+        }
+        else
+        {
+          _db.Flavors.Update(flavor);
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+        }
+      }
+      else
+      {
+        return View(flavor);
+      }
+    }
   }
 }
