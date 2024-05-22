@@ -17,7 +17,7 @@ _A website to display all flavors and treats at Pierre's shop. To create, edit, 
 ## Setup/Installation Requirements
 
 1. _Open Git Bash/Open terminal of your choice navigate to directory of your choice and run this command `git clone https://github.com/JasoFal/Pierre-Sweet-and-Savory-Treats.solution.git`_
-2. _Once you have cloned the project, navigate to project folder using Git Bash/ a terminal of your choice using the `cd` command and run `code .` within project folder. Or you can use file explorer to open the project manually._
+2. _Once you have cloned the project, navigate to project folder using Git Bash/ a terminal of your choice using the `cd` command and run `code .` within project folder. Alternatively you can use VSCodes (You can use any editor but these instructions are for VSCode) open folder option under the File tab to open project manually shortcut is `Ctrl + O`_
 
 ##### Installing Dependencies
 
