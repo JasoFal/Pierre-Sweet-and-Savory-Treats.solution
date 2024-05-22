@@ -14,22 +14,22 @@
 else
 {
   <h4>This treat has the following flavors:</h4>
+  if (!User.Identity.IsAuthenticated)
+  {
+    <p>Must be @Html.ActionLink("logged in", "LogIn", "Account") in order to remove flavor(s) from treat.</p>
+  }
   <ul>
     @foreach(TreatFlavor join in Model.JoinEntities)
     {
       <li>@join.Flavor.FlavorName</li>
-      @if (User.Identity.IsAuthenticated)
-      {
         @using (Html.BeginForm("DeleteJoin", "Treats"))
         {
           @Html.Hidden("joinId", @join.TreatFlavorId)
-          <input type="submit" value="Remove flavor from treat" />
+          if (User.Identity.IsAuthenticated)
+          {
+            <input type="submit" value="Remove flavor from treat" />
+          }
         }
-      }
-      else
-      {
-        <p>@Html.ActionLink("Log in", "LogIn", "Account") to remove flavor from treat.</p>
-      }
     }
   </ul>
 }
