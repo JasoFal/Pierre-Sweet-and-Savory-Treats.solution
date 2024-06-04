@@ -13,6 +13,8 @@
   @Html.ValidationSummary("Please fix the following error(s) and then resubmit the form:")
 }
 
+<p>Your password must contain at least six characters, a capital letter, a lowercase letter, a number, and a special character.</p>
+
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
   @Html.LabelFor(user => user.Email)
